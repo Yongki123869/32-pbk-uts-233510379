@@ -1,9 +1,21 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 
-// State untuk input dan daftar kegiatan
 const newActivity = ref('')
 const activities = ref([])
+
+// Ambil data dari localStorage saat komponen dimuat
+onMounted(() => {
+  const savedActivities = localStorage.getItem('activities')
+  if (savedActivities) {
+    activities.value = JSON.parse(savedActivities)
+  }
+})
+
+// Simpan ke localStorage setiap kali daftar kegiatan berubah
+watch(activities, (newVal) => {
+  localStorage.setItem('activities', JSON.stringify(newVal))
+}, { deep: true })
 
 // Fungsi untuk menambahkan kegiatan
 function addActivity() {
