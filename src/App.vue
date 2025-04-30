@@ -1,8 +1,9 @@
 <script setup>
-import { ref, onMounted, watch } from 'vue'
+import { ref, onMounted, watch, computed } from 'vue'
 
 const newActivity = ref('')
 const activities = ref([])
+const showUncompletedOnly = ref(false) // Toggle filter kegiatan
 
 // Ambil data dari localStorage saat halaman dimuat
 onMounted(() => {
@@ -29,6 +30,13 @@ function addActivity() {
 function removeActivity(index) {
   activities.value.splice(index, 1)
 }
+
+// Daftar kegiatan berdasarkan filter
+const filteredActivities = computed(() =>
+  showUncompletedOnly.value
+    ? activities.value.filter(activity => !activity.completed)
+    : activities.value
+)
 </script>
 
 <template>
@@ -45,9 +53,17 @@ function removeActivity(index) {
       <button @click="addActivity">Tambah</button>
     </div>
 
+    <!-- Checkbox filter -->
+    <div class="filter">
+      <label>
+        <input type="checkbox" v-model="showUncompletedOnly" />
+        Tampilkan hanya yang belum selesai
+      </label>
+    </div>
+
     <ul class="list">
       <li
-        v-for="(activity, index) in activities"
+        v-for="(activity, index) in filteredActivities"
         :key="index"
         class="activity-item"
       >
@@ -58,7 +74,9 @@ function removeActivity(index) {
         <span :class="{ completed: activity.completed }">
           {{ index + 1 }}. {{ activity.name }}
         </span>
-        <button class="remove-btn" @click="removeActivity(index)">Hapus</button>
+        <button class="remove-btn" @click="removeActivity(activities.indexOf(activity))">
+          Hapus
+        </button>
       </li>
     </ul>
   </div>
@@ -83,6 +101,10 @@ h1 {
 .form {
   display: flex;
   justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.filter {
   margin-bottom: 1rem;
 }
 
