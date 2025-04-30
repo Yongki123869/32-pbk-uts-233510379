@@ -1,7 +1,6 @@
 <script setup>
 import { ref, onMounted, watch } from 'vue'
 
-// State input dan daftar kegiatan
 const newActivity = ref('')
 const activities = ref([])
 
@@ -13,17 +12,22 @@ onMounted(() => {
   }
 })
 
-// Simpan ke localStorage setiap kali activities berubah
+// Simpan ke localStorage setiap kali daftar kegiatan berubah
 watch(activities, (val) => {
   localStorage.setItem('activities', JSON.stringify(val))
 }, { deep: true })
 
-// Tambahkan kegiatan baru
+// Tambah kegiatan baru
 function addActivity() {
   if (newActivity.value.trim()) {
     activities.value.push(newActivity.value.trim())
     newActivity.value = ''
   }
+}
+
+// Hapus kegiatan berdasarkan index
+function removeActivity(index) {
+  activities.value.splice(index, 1)
 }
 </script>
 
@@ -42,8 +46,9 @@ function addActivity() {
     </div>
 
     <ul class="list">
-      <li v-for="(activity, index) in activities" :key="index">
+      <li v-for="(activity, index) in activities" :key="index" class="activity-item">
         {{ index + 1 }}. {{ activity }}
+        <button class="remove-btn" @click="removeActivity(index)">Hapus</button>
       </li>
     </ul>
   </div>
@@ -98,8 +103,24 @@ button:hover {
   text-align: left;
 }
 
-.list li {
+.activity-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: 0.5rem;
   border-bottom: 1px solid #eee;
+}
+
+.remove-btn {
+  background-color: #ff5f5f;
+  border: none;
+  padding: 0.3rem 0.7rem;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.remove-btn:hover {
+  background-color: #e04848;
 }
 </style>
