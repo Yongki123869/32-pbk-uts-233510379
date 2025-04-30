@@ -1,23 +1,24 @@
 <script setup>
 import { ref, onMounted, watch } from 'vue'
 
+// State input dan daftar kegiatan
 const newActivity = ref('')
 const activities = ref([])
 
-// Ambil data dari localStorage saat komponen dimuat
+// Ambil data dari localStorage saat halaman dimuat
 onMounted(() => {
-  const savedActivities = localStorage.getItem('activities')
-  if (savedActivities) {
-    activities.value = JSON.parse(savedActivities)
+  const saved = localStorage.getItem('activities')
+  if (saved) {
+    activities.value = JSON.parse(saved)
   }
 })
 
-// Simpan ke localStorage setiap kali daftar kegiatan berubah
-watch(activities, (newVal) => {
-  localStorage.setItem('activities', JSON.stringify(newVal))
+// Simpan ke localStorage setiap kali activities berubah
+watch(activities, (val) => {
+  localStorage.setItem('activities', JSON.stringify(val))
 }, { deep: true })
 
-// Fungsi untuk menambahkan kegiatan
+// Tambahkan kegiatan baru
 function addActivity() {
   if (newActivity.value.trim()) {
     activities.value.push(newActivity.value.trim())
@@ -28,14 +29,14 @@ function addActivity() {
 
 <template>
   <div class="container">
-    <h1>Daftar List Keseharian Ku</h1>
-    
+    <h1>Daftar Kegiatan Harian</h1>
+
     <div class="form">
       <input
         v-model="newActivity"
         @keyup.enter="addActivity"
         type="text"
-        placeholder="Masukkan kegiatan"
+        placeholder="Masukkan kegiatan baru"
       />
       <button @click="addActivity">Tambah</button>
     </div>
