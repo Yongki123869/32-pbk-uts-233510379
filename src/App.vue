@@ -49,13 +49,15 @@ function removeActivity(index) {
       <li
         v-for="(activity, index) in activities"
         :key="index"
-        :class="['activity-item', { completed: activity.completed }]"
+        class="activity-item"
       >
         <input
           type="checkbox"
           v-model="activity.completed"
         />
-        {{ index + 1 }}. {{ activity.name }}
+        <span :class="{ completed: activity.completed }">
+          {{ index + 1 }}. {{ activity.name }}
+        </span>
         <button class="remove-btn" @click="removeActivity(index)">Hapus</button>
       </li>
     </ul>
@@ -84,7 +86,7 @@ h1 {
   margin-bottom: 1rem;
 }
 
-input {
+input[type="text"] {
   padding: 0.5rem;
   width: 60%;
   margin-right: 0.5rem;
