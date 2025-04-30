@@ -20,7 +20,7 @@ watch(activities, (val) => {
 // Tambah kegiatan baru
 function addActivity() {
   if (newActivity.value.trim()) {
-    activities.value.push(newActivity.value.trim())
+    activities.value.push({ name: newActivity.value.trim(), completed: false })
     newActivity.value = ''
   }
 }
@@ -46,8 +46,16 @@ function removeActivity(index) {
     </div>
 
     <ul class="list">
-      <li v-for="(activity, index) in activities" :key="index" class="activity-item">
-        {{ index + 1 }}. {{ activity }}
+      <li
+        v-for="(activity, index) in activities"
+        :key="index"
+        :class="['activity-item', { completed: activity.completed }]"
+      >
+        <input
+          type="checkbox"
+          v-model="activity.completed"
+        />
+        {{ index + 1 }}. {{ activity.name }}
         <button class="remove-btn" @click="removeActivity(index)">Hapus</button>
       </li>
     </ul>
@@ -122,5 +130,11 @@ button:hover {
 
 .remove-btn:hover {
   background-color: #e04848;
+}
+
+/* Style untuk menandakan kegiatan yang selesai */
+.completed {
+  text-decoration: line-through;
+  color: gray;
 }
 </style>
