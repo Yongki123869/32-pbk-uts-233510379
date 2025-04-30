@@ -83,82 +83,134 @@ const filteredActivities = computed(() =>
 </template>
 
 <style scoped>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: linear-gradient(145deg, #e0f7fa, #f1f8e9);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
 .container {
-  max-width: 500px;
-  margin: 2rem auto;
-  padding: 2rem;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  max-width: 600px;
+  margin: 3rem auto;
+  padding: 2rem 2.5rem;
+  background-color: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
   text-align: center;
-  font-family: Arial, sans-serif;
+  transition: all 0.3s ease-in-out;
 }
 
 h1 {
-  margin-bottom: 1rem;
+  font-size: 1.8rem;
+  color: #2e7d32;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
 }
 
 .form {
   display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
   justify-content: center;
-  margin-bottom: 1rem;
-}
-
-.filter {
-  margin-bottom: 1rem;
 }
 
 input[type="text"] {
-  padding: 0.5rem;
-  width: 60%;
-  margin-right: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  padding: 0.6rem 1rem;
+  flex: 1;
+  border: 2px solid #a5d6a7;
+  border-radius: 12px;
+  outline: none;
+  transition: 0.3s;
+}
+
+input[type="text"]:focus {
+  border-color: #66bb6a;
+  box-shadow: 0 0 0 2px rgba(102, 187, 106, 0.2);
 }
 
 button {
-  padding: 0.5rem 1rem;
-  background-color: #42b883;
+  padding: 0.6rem 1.2rem;
+  background: #66bb6a;
   color: white;
+  font-weight: 600;
   border: none;
-  border-radius: 4px;
+  border-radius: 12px;
   cursor: pointer;
+  transition: background 0.3s;
 }
 
 button:hover {
-  background-color: #369b72;
+  background: #4caf50;
+}
+
+.filter {
+  margin-bottom: 1.2rem;
+  color: #333;
+  font-size: 0.95rem;
+  text-align: left;
+}
+
+.filter input {
+  margin-right: 0.5rem;
+  accent-color: #66bb6a;
 }
 
 .list {
   list-style: none;
   padding: 0;
-  text-align: left;
+  margin-top: 1rem;
 }
 
 .activity-item {
+  background-color: #f9fbe7;
+  margin-bottom: 0.8rem;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 0.5rem;
-  border-bottom: 1px solid #eee;
+  justify-content: space-between;
+  transition: transform 0.2s;
+  box-shadow: 0 4px 8px rgba(102, 187, 106, 0.1);
+}
+
+.activity-item:hover {
+  transform: scale(1.01);
+}
+
+.activity-item input[type="checkbox"] {
+  margin-right: 0.75rem;
+  transform: scale(1.2);
+  accent-color: #66bb6a;
+}
+
+.activity-item span {
+  flex: 1;
+  font-size: 1rem;
+  color: #333;
+}
+
+.completed {
+  text-decoration: line-through;
+  color: #9e9e9e;
 }
 
 .remove-btn {
-  background-color: #ff5f5f;
+  background-color: #ef5350;
   border: none;
-  padding: 0.3rem 0.7rem;
+  padding: 0.4rem 0.9rem;
   color: white;
-  border-radius: 4px;
+  font-size: 0.85rem;
+  border-radius: 10px;
   cursor: pointer;
+  transition: background 0.3s;
 }
 
 .remove-btn:hover {
-  background-color: #e04848;
-}
-
-/* Style untuk menandakan kegiatan yang selesai */
-.completed {
-  text-decoration: line-through;
-  color: gray;
+  background-color: #d32f2f;
 }
 </style>
